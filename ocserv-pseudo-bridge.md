@@ -78,6 +78,8 @@ OpenConnect server Virtual Interface IP will be 192.168.0.33
 
 To avoid conflicts, make sure local LAN does not have any IP assigned
 in this range: 192.168.0.32-63.
+
 Also remember to check that DHCP is not going to assign leases in this
-range: 192.168.0.32-63
+range: 192.168.0.32-63, or alternatively, that the ping-leases option to
+ocserv's configuration is set to true.
 
