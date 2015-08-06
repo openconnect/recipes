@@ -37,6 +37,27 @@ configuration snippet.
 listen-clear-file = /var/run/ocserv-conn.socket
 ```
 
+Note that in that case ocserv will not have enough information
+for the client's IP address. That can be fixed by instructing
+haproxy to provide that information via the Proxy Protocol (supported
+by ocserv 0.10.7 and later). To enable that features add to ocserv.conf
+the following.
+
+```
+listen-proxy-proto = true
+```
+
+In haproxy.conf you need to enable the following options.
+```
+backend ocserv-backend
+    server ocserv unix@/var/run/ocserv-conn.socket send-proxy-v2 check
+```
+
+You could also enable the haproxy's "send-proxy-v2-ssl-cn" option, if
+you perform client certificate verification in haproxy and expect
+ocserv to trust the user name provided by it.
+
+
 ## Method 2: SSL termination on ocserv (sniproxy)
 
 An alternative method to collocate ocserv and an HTTPS server on port 443,
