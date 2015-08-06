@@ -1,4 +1,4 @@
-# Second factor authentication with ocserv
+# Two factor authentication with ocserv
 
 Author: Nikos Mavrogiannopoulos
 

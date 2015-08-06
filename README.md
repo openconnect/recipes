@@ -1,5 +1,5 @@
 # Recipes for Openconnect VPN
 
-* [Two Factor Authentication](ocserv-2fa.md)
-* [Pseudo Bridges](ocserv-pseudo-bridge.md)
-* [Multi-hosting](ocserv-multihost.md)
+* [Two factor authentication with ocserv](ocserv-2fa.md)
+* [Pseudo-Bridge setup with Proxy ARP](ocserv-pseudo-bridge.md)
+* [How to share the same port for VPN and HTTP](ocserv-multihost.md)

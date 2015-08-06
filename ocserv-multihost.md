@@ -1,4 +1,4 @@
-# How to host ocserv and a web server on the same port
+# How to share the same port for VPN and HTTP
 
 Author: Nikos Mavrogiannopoulos
 
