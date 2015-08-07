@@ -70,7 +70,8 @@ otpauth://hotp/testuser@example.com?secret=BASE32KEY&issuer=COMPANY&counter=1
 
 It is possible to use openconnect and ocserv using smart cards as a second factor.
 This text will guide the steps required to generate the Public Key Infrastructure
-(PKI) to achieve that.
+(PKI) to achieve that.  The following instructions assume the availability of the
+latest releases of GnuTLS 3.3.x or later.
 
 ### Generate a certificate authority
 
@@ -102,12 +103,12 @@ Ideally it should be stored in a Hardware Security Module or smart card (in that
 case you may replace ca-key.pem with the equivalent PKCS #11 URL in the subsequent
 steps).
 
-### Sign a client's keys
+### Generate and sign clients' keys in the card
 
-Suppose we have a smart card and need to generate and sign the client's keys. The
-following steps are required. We assume that the PKCS #11 URL of the smart card
-is known. If not use "p11tool --list-tokens" to find it out, and replace "pkcs11:" with
-the actual URL.
+Suppose we have a smart card and need to generate and sign the client's keys in
+the card. The following steps are required. We assume that the PKCS #11 URL of
+the smart card is known. If not use "p11tool --list-tokens" to find it out, and
+replace "pkcs11:" with the actual URL.
 
 ```
 $ p11tool --generate-rsa "pkcs11:" --label user-vpn-key --login
