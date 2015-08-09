@@ -5,7 +5,7 @@ settings in OpenConnect VPN server.
 
 It is open for contribution; if you think you have a good overview
 of fairly complex scenario, or another improvement, open a pull request
-and submit it.
+and submit it [at github](https://github.com/openconnect/recipes).
 
 * [Two factor authentication with ocserv](ocserv-2fa.md)
 * [Pseudo-Bridge setup with Proxy ARP](ocserv-pseudo-bridge.md)
