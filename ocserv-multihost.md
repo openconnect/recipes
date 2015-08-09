@@ -8,7 +8,7 @@ However the 443 TCP port is typically used by an HTTP server
 on a system. This section will describe methods on how to collocate
 ocserv with a web server.
 
-## Method 1: SSL termination on external program (haproxy)</h3>
+## Method 1: SSL termination on external program (haproxy)
 
 To collocate ocserv and an HTTPS server on port 443, 
 [haproxy](http://www.haproxy.org/) (or similar proxy applications) could
