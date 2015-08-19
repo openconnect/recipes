@@ -10,3 +10,4 @@ and submit it [at github](https://github.com/openconnect/recipes).
 * [Two factor authentication with ocserv](ocserv-2fa.md)
 * [Pseudo-Bridge setup with Proxy ARP](ocserv-pseudo-bridge.md)
 * [How to share the same port for VPN and HTTP](ocserv-multihost.md)
+* [Using Kerberos authentication with ocserv](ocserv-kerberos.md)
