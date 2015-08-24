@@ -40,7 +40,7 @@ listen-clear-file = /var/run/ocserv-conn.socket
 Note that in that case ocserv will not have enough information
 for the client's IP address. That can be fixed by instructing
 haproxy to provide that information via the Proxy Protocol (supported
-by ocserv 0.10.7 and later). To enable that features add to ocserv.conf
+by ocserv 0.10.7 and later). To enable that feature add to ocserv.conf
 the following.
 
 ```
