@@ -83,5 +83,5 @@ kkdcp = /KdcProxy KERBEROS.REALM tcp@KDC-IP-ADDRESS:88
 
 ## Setting the client up
 
-This section is identical to the [Kerberos document](ocserv-kerberos.md#Setting the client up).
+This section is identical to the [Kerberos document](ocserv-kerberos.md#setting-the-client-up).
 
