@@ -1,4 +1,4 @@
-# Integrating [FreeIPA](https://www.freeipa.org) with ocserv
+# Integrating ocserv with [FreeIPA](https://www.freeipa.org)
 
 Author: Nikos Mavrogiannopoulos	
 
