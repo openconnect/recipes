@@ -27,7 +27,7 @@ and specifies the valid for VPN authentication lifetime, in seconds, of a Kerber
 that prevents the usage of the VPN for the whole lifetime of a Kerberos ticket.
 
 The following line will enable the MS-KKDCP proxy on ocserv. You’ll need to replace
-the KERBEROS.RELAM with your realm and the KDC IP address. That proxy will allow
+the KERBEROS.REALM with your realm and the KDC IP address. That proxy will allow
 the client to obtain Kerberos tickets through ocserv.
 
 ```
