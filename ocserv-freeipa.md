@@ -7,14 +7,19 @@ Author: Nikos Mavrogiannopoulos
 FreeIPA is an identity and policy management solution for POSIX based systems.
 The OpenConnect VPN server can be integrated with it as it natively supports
 [Kerberos](ocserv-kerberos.md). This document provides a simplification over
-the Kerberos instructions as it takes advantage of the FreeIPA presence.
+the Kerberos instructions as it takes advantage of the FreeIPA infrastructure.
 
+It is recommended to have the VPN server on a separate system than the FreeIPA
+master server, and the following instructions make that assumption.
 
 ## Setting the server up
 
 ### Setting up the Kerberos principal
 
-It is needed to add a new Principal into Kerberos to be used by the VPN server. As OpenConnect VPN presents HTTPS end-point, a recommended Kerberos principal should be HTTP/server. If for example, your server is 'vpn.example.com' you may use the following instructions.
+It is needed to add a new Principal into Kerberos to be used by the VPN server.
+As OpenConnect VPN presents HTTPS end-point, a recommended Kerberos principal
+should be HTTP/server. If for example, your server is 'vpn.example.com' you may
+use the following instructions.
 
 ```
 ipa service-add HTTP/vpn.example.com
