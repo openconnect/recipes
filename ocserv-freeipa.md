@@ -9,6 +9,7 @@ The OpenConnect VPN server can be integrated with it as it natively supports
 [Kerberos](ocserv-kerberos.md). This document provides a simplification over
 the Kerberos instructions as it takes advantage of the FreeIPA presence.
 
+
 ## Setting the server up
 
 ### Setting up the Kerberos principal
@@ -23,6 +24,7 @@ ipa-getkeytab -s vpn.example.com -p VPN/vpn.example.com -k /etc/ocserv/key.tab
 
 These commands also extract the keytab to be used by ocserv and store it in
 /etc/ocserv/key.tab. That contains the Kerberos keys relevant to that principal.
+
 
 ### Setting up the server certificate
 
@@ -44,6 +46,20 @@ ipa cert-request --principal VPN/vpn.example.com server.csr
 ipa service-show VPN/vpn.example.com --out=/etc/ocserv/server-cert.pem
 ```
 
+To enable the certificates generated you'll need to set the following
+two lines in /etc/ocserv/ocserv.conf.
+```
+server-cert = /etc/ocserv/server-cert.pem
+server-key = /etc/ocserv/server-key.pem
+```
+
+To automatically renew the server certificate when it expires the following
+command is required.
+```
+ipa-getcert request -f /etc/ocserv/server-cert.pem -k /etc/ocserv/server-key.pem -r
+```
+
+
 ### Setting up OpenConnect server
 
 To enable logins with either PAM-SSSD or Kerberos tickets, it is required to
@@ -53,6 +69,7 @@ be done with the following two lines in /etc/ocserv/ocserv.conf.
 ```
 auth = pam
 enable-auth = gssapi[keytab=/etc/ocserv/key.tab,require-local-user-map=true,tgt-freshness-time=360]
+
 ```
 
 Alternatively you could require your users to use their certificate to login. In that
@@ -75,6 +92,7 @@ account    required	pam_nologin.so
 account    include	password-auth
 session    include	password-auth
 ```
+
 
 ### Setting up MS-KKDCP
 
