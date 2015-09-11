@@ -11,3 +11,4 @@ and submit it [at github](https://github.com/openconnect/recipes).
 * [Pseudo-Bridge setup with Proxy ARP](ocserv-pseudo-bridge.md)
 * [How to share the same port for VPN and HTTP](ocserv-multihost.md)
 * [Using Kerberos authentication with ocserv](ocserv-kerberos.md)
+* [Integrating ocserv with FreeIPA](ocserv-freeipa.md)
