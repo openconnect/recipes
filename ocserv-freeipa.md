@@ -55,6 +55,15 @@ auth = pam
 enable-auth = gssapi[keytab=/etc/ocserv/key.tab,require-local-user-map=true,tgt-freshness-time=360]
 ```
 
+Alternatively you could require your users to use their certificate to login. In that
+case you would have to add the following lines. That would require the user to present
+a certificate in addition to their password or any Kerberos ticket.
+
+```
+auth = certificate
+ca-cert = /etc/ipa/ca.crt
+```
+
 It is also important to modify /etc/pam.d/ocserv to use SSSD for authentication. This
 is system-specific, but in a typical Fedora system it is sufficient to use the defaults,
 as shown below.
