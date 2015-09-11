@@ -14,12 +14,11 @@ the Kerberos instructions as it takes advantage of the FreeIPA presence.
 
 ### Setting up the Kerberos principal
 
-It is needed to add a new Principal into Kerberos to be used by the VPN server.
-If for example, your server is 'vpn.example.com' you may use the following instructions.
+It is needed to add a new Principal into Kerberos to be used by the VPN server. As OpenConnect VPN presents HTTPS end-point, a recommended Kerberos principal should be HTTP/server. If for example, your server is 'vpn.example.com' you may use the following instructions.
 
 ```
-ipa service-add VPN/vpn.example.com
-ipa-getkeytab -s vpn.example.com -p VPN/vpn.example.com -k /etc/ocserv/key.tab
+ipa service-add HTTP/vpn.example.com
+ipa-getkeytab -s vpn.example.com -p HTTP/vpn.example.com -k /etc/ocserv/key.tab
 ```
 
 These commands also extract the keytab to be used by ocserv and store it in
@@ -42,8 +41,8 @@ cat << _EOF_ >server.tmpl
 _EOF_
 certtool --generate-request --load-privkey /etc/ocserv/server-key.pem \
 	--outfile server.csr --template server.tmpl
-ipa cert-request --principal VPN/vpn.example.com server.csr
-ipa service-show VPN/vpn.example.com --out=/etc/ocserv/server-cert.pem
+ipa cert-request --principal HTTP/vpn.example.com server.csr
+ipa service-show HTTP/vpn.example.com --out=/etc/ocserv/server-cert.pem
 ```
 
 To enable the certificates generated you'll need to set the following
@@ -62,9 +61,8 @@ ipa-getcert request -f /etc/ocserv/server-cert.pem -k /etc/ocserv/server-key.pem
 
 ### Setting up OpenConnect server
 
-To enable logins with either PAM-SSSD or Kerberos tickets, it is required to
-instruct ocserv to use PAM and  GSSAPI for authentication. That can
-be done with the following two lines in /etc/ocserv/ocserv.conf.
+To enable logins with either password or Kerberos tickets checked via PAM with SSSD, it is required to
+instruct ocserv to use PAM and  GSSAPI for authentication. That can be done with the following two lines in /etc/ocserv/ocserv.conf.
 
 ```
 auth = pam
@@ -82,7 +80,7 @@ ca-cert = /etc/ipa/ca.crt
 ```
 
 It is also important to modify /etc/pam.d/ocserv to use SSSD for authentication. This
-is system-specific, but in a typical Fedora system it is sufficient to use the defaults,
+is system-specific. A typical Fedora system by default will use SSSD on the host enrolled into FreeIPA,
 as shown below.
 
 ```
