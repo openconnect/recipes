@@ -4,13 +4,14 @@ Author: Nikos Mavrogiannopoulos
 
 
 ## Introduction
-FreeIPA is an identity and policy management solution for POSIX based systems.
-The OpenConnect VPN server can be integrated with it as it natively supports
-[Kerberos](ocserv-kerberos.md). This document provides a simplification over
-the Kerberos instructions as it takes advantage of the FreeIPA infrastructure.
+FreeIPA is an identity and policy management solution for POSIX based systems
+based on Kerberos. This document provides instructions to take advantage of the
+FreeIPA infrastructure when setting up ocserv. Such a combination simplifies
+the management of properties such as second factor authentication, either
+via passwords, or certificates.
 
-It is recommended to have the VPN server on a separate system than the FreeIPA
-master server, and the following instructions make that assumption.
+Note that, it is recommended to have the VPN server on a separate system than the
+FreeIPA master server, and the following instructions make that assumption.
 
 ## Setting the server up
 
