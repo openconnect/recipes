@@ -97,6 +97,8 @@ with smart cards.
 ```
 auth = certificate
 ca-cert = /etc/ipa/ca.crt
+crl = /path/to/MasterCRL.bin
+cert-user-oid = 2.5.4.3
 ```
 
 
