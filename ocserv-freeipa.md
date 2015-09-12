@@ -66,27 +66,19 @@ ipa-getcert request -f /etc/ocserv/server-cert.pem -k /etc/ocserv/server-key.pem
 
 ### Setting up OpenConnect server
 
-To enable logins with either password or Kerberos tickets checked via PAM with SSSD, it is required to
+To enable logins with either Kerberos tickets or passwords checked via PAM with SSSD, it is required to
 instruct ocserv to use PAM and  GSSAPI for authentication. That can be done with the following two lines in /etc/ocserv/ocserv.conf.
 
 ```
 auth = pam
 enable-auth = gssapi[keytab=/etc/ocserv/key.tab,require-local-user-map=true,tgt-freshness-time=360]
-
 ```
 
-Alternatively you could require your users to use their certificate to login. In that
-case you would have to add the following lines. That would require the user to present
-a certificate in addition to their password or any Kerberos ticket.
-
-```
-auth = certificate
-ca-cert = /etc/ipa/ca.crt
-```
-
+That will set the primary authentication method based on PAM, and make Kerberos (via GSSAPI)
+a sufficient for login authentication method.
 It is also important to modify /etc/pam.d/ocserv to use SSSD for authentication. This
-is system-specific. A typical Fedora system by default will use SSSD on the host enrolled into FreeIPA,
-as shown below.
+is system-specific. A typical Fedora system by default will use SSSD on the host enrolled into
+FreeIPA, as shown below.
 
 ```
 #%PAM-1.0
@@ -94,6 +86,16 @@ auth       include	password-auth
 account    required	pam_nologin.so
 account    include	password-auth
 session    include	password-auth
+```
+
+Alternatively, to require users to present a certificate for VPN login, the following lines are
+required in ocserv.conf. That would require the user to present a signed by IPA certificate in
+addition to their password or any Kerberos ticket. That effectively, enables [second factor authentication](ocserv-2fa.md)
+with smart cards.
+
+```
+auth = certificate
+ca-cert = /etc/ipa/ca.crt
 ```
 
 
