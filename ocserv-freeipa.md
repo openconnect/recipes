@@ -101,12 +101,12 @@ ca-cert = /etc/ipa/ca.crt
 
 ### Setting up MS-KKDCP
 
-For users outside the LAN to obtain a Kerberos ticket, the MS-KKDCP proxy protocol
-can be used. That proxies Kerberos ticket requests over HTTPS, the same protocol
-OpenConnect uses. For that reason, ocserv provides optionally an MS-KKDCP proxy.
-To enable it the following lines in /etc/ocserv/ocserv.conf are required.
-You’ll need to replace the KERBEROS.REALM with your realm and the master IPA (KDC)
-address. 
+The MS-KKDCP proxy protocol is a protocol which allows access to the Kerberos
+authentication server (KDC) via HTTPS. That enables users to obtain Kerberos tickets
+even when outside the local network, allowing them to login to VPN with their ticket.
+For that reason, ocserv provides optionally an MS-KKDCP proxy. To enable it the following
+lines in /etc/ocserv/ocserv.conf are required. You’ll need to replace the KERBEROS.REALM
+with your realm and the master IPA (KDC) address. 
 
 ```
 kkdcp = /KdcProxy KERBEROS.REALM tcp@KDC-IP-ADDRESS:88
