@@ -97,10 +97,17 @@ with smart cards.
 ```
 auth = certificate
 ca-cert = /etc/ipa/ca.crt
-crl = /path/to/MasterCRL.bin
+crl = /etc/ocserv/MasterCRL.bin
 cert-user-oid = 2.5.4.3
 ```
 
+Since the CRL isn't available as a file in the filesystem you'll need to
+download the URL using a periodic cron job from the URL shown below, and then move
+the file to the expected location (/etc/ocserv/MasterCRL.bin).
+
+```
+curl https://master.ipa.example.com/ipa/crl/MasterCRL.bin
+```
 
 ### Setting up MS-KKDCP
 
