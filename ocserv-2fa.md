@@ -7,7 +7,7 @@ ocserv allows for multiple authentication factors per session. This
 document discusses the options available for one-time passwords and
 smart cards.
 
-## OATH: One-time passwords
+## OATH: One-time passwords with PAM
 
 It is possible to require each user to enter their password and an additional
 one time password. That can be done using PAM as the authentication backend and
@@ -18,7 +18,6 @@ In that case, the following lines should be present in ocserv.conf.
 
 ```
 auth = "pam"
-acct = "pam"
 ```
 
 Then in addition to the system's authentication you need to add the following
@@ -57,14 +56,59 @@ $ ykpersonalize -1 -ooath-hotp -aKEY
 
 ### FreeOTP
 
-Convert the KEY to base32 (I couldn't figure a one liner for that). Then
-use the application 'quearcode' to create a QR code which can be imported
+Convert the KEY to base32 using the command:
+```
+echo 0xKEY|xxd -r -c 256|base32
+```
+
+Then use the application 'quearcode' to create a QR code which can be imported
 in FreeOTP. The QR code text must be the following (with the obvious parts
 being replaced).
 
 ```
 otpauth://hotp/testuser@example.com?secret=BASE32KEY&issuer=COMPANY&counter=1
 ```
+
+## OATH: One-time passwords with ocserv's password file
+
+Since version 0.10.9 it is possible to use ocserv's password file for 2FA. It
+requires ocserv to be compiled with liboath.
+
+In that case, the following lines should be present in ocserv.conf.
+
+```
+auth = "plain[passwd=/etc/ocserv/passwd,otp=/etc/ocserv/users.oath]"
+```
+
+In that case 'passwd' needs to be in the password file format of ocserv,
+and users.oath must be in the "UsersFile" format as described in
+https://code.google.com/p/mod-authn-otp/wiki/UsersFile. To add a user,
+with a time-based token, in that file use the following command.
+
+Since the following instructions are similar to the PAM case. For diversity
+we will use a time-based OTP.
+
+```
+echo "HOTP/T30 testuser - $(head -c 16 /dev/urandom |xxd -c 256 -ps)" >>/etc/users.oath
+```
+
+In case an OTP file is specified, it is allowed for the password field in the
+'passwd' file to be empty. In that case the user will only be prompted for the OTP.
+
+You can print the first 5 passwords for the 'testuser' above using the following command
+(where KEY is replaced with the key generated above).
+
+```
+$ oathtool/oathtool --totp -w 5 KEY
+```
+
+The user can then use OTP tools in his mobile like FreeOTP (in android app-store),
+or a yubikey as a second factor.
+
+### Yubikey/FreeOTP
+
+The instructions to setup Yubikey or FreeOTP are identical to the PAM case. Note that
+Yubikeys cannot use time based OTP.
 
 ## PKI: Smart cards
 
