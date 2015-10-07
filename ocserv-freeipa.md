@@ -97,18 +97,22 @@ with smart cards.
 ```
 auth = certificate
 ca-cert = /etc/ipa/ca.crt
-crl = /etc/ocserv/MasterCRL.pem
+crl = /etc/ocserv/MasterCRL.bin
 cert-user-oid = 2.5.4.3
 ```
 
 Since the CRL isn't available as a file in the filesystem you'll need to
 download the URL using a periodic cron job from the URL shown below, and then move
-the file to the expected location (/etc/ocserv/MasterCRL.pem).
+the file to the expected location (/etc/ocserv/MasterCRL.bin).
 
 ```
-curl https://master.ipa.example.com/ipa/crl/MasterCRL.bin
-certtool --crl-info --inder --infile MasterCRL.bin --outfile MasterCRL.pem
+wget https://master.ipa.example.com/ipa/crl/MasterCRL.bin
+mv MasterCRL.bin /etc/ocserv/
 ```
+
+Note that, for versions of ocserv prior to 0.10.9 the Master CRL will have to be converted
+to PEM format.
+
 
 ### Setting up MS-KKDCP
 
