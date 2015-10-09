@@ -114,11 +114,12 @@ Note that, for versions of ocserv prior to 0.10.9 the Master CRL will have to be
 to PEM format.
 
 
-### Setting up MS-KKDCP
+### Setting up single sign-on with MS-KKDCP
 
 The MS-KKDCP proxy protocol is a protocol which allows access to the Kerberos
 authentication server (KDC) via HTTPS. That enables users to obtain Kerberos tickets
-even when outside the local network, allowing them to login to VPN with their ticket.
+even when outside the local network, allowing them to also login to VPN with their ticket, thus
+achieving single sign-on.
 For that reason, ocserv provides optionally an MS-KKDCP proxy. To enable it the following
 lines in /etc/ocserv/ocserv.conf are required. You’ll need to replace the KERBEROS.REALM
 with your realm and the master IPA (KDC) address. 
