@@ -8,7 +8,8 @@ FreeIPA is an identity and policy management solution for POSIX based systems
 based on Kerberos. This document provides instructions to take advantage of the
 FreeIPA infrastructure when setting up ocserv. Such a combination simplifies
 the management of properties such as second factor authentication, either
-via passwords, or certificates.
+via passwords, or certificates. In addition it can be used to achieve
+[single sign-on](https://securityblog.redhat.com/2015/06/17/single-sign-on-with-openconnect-vpn-server-over-freeipa/).
 
 Note that, it is recommended to have the VPN server on a separate system than the
 FreeIPA master server, and the following instructions make that assumption.
