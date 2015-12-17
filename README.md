@@ -12,3 +12,4 @@ and submit it [at github](https://github.com/openconnect/recipes).
 * [How to share the same port for VPN and HTTP](ocserv-multihost.md)
 * [Using Kerberos authentication with ocserv](ocserv-kerberos.md)
 * [Integrating ocserv with FreeIPA](ocserv-freeipa.md)
+* [Site to site links with ocserv](ocserv-site-to-site.md)
