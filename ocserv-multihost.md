@@ -8,7 +8,7 @@ However the 443 TCP port is typically used by an HTTP server
 on a system. This section will describe methods on how to collocate
 ocserv with a web server.
 
-## Method 1: SSL termination on external program (haproxy)
+## Method 1: SSL termination on external program
 
 To collocate ocserv and an HTTPS server on port 443, 
 [haproxy](http://www.haproxy.org/) (or similar proxy applications) could
@@ -58,10 +58,13 @@ you perform client certificate verification in haproxy and expect
 ocserv to trust the user name provided by it.
 
 
-## Method 2: SSL termination on ocserv (sniproxy)
+## Method 2: SSL termination on ocserv
 
 An alternative method to collocate ocserv and an HTTPS server on port 443,
-is with [sniproxy](https://github.com/dlundquist/sniproxy).
+is by using SNI and forwarding traffic accordingly. In this example we use
+[sniproxy](https://github.com/dlundquist/sniproxy), but the same can be
+achieved with haproxy as well.
+
 Sniproxy allows sharing the HTTPS port as long as the clients advertise
 the host name they connect to using server name indication (SNI). This
 is true for the majority of web browsers today. For this to work the web
