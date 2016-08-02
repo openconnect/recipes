@@ -13,6 +13,7 @@ and submit it [at github](https://github.com/openconnect/recipes).
 2. Authentication
   * [Two factor authentication with ocserv](ocserv-2fa.md)
   * [How to setup ocserv for RADIUS authentication](ocserv-authentication-radius-radcli.md)
+  * [How to setup ocserv for PAM authentication](ocserv-authentication-pam.md)
   * [Using Kerberos authentication with ocserv](ocserv-kerberos.md)
   * [Integrating ocserv with FreeIPA](ocserv-freeipa.md)
 3. Networking
