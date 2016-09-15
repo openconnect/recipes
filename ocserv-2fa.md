@@ -99,7 +99,7 @@ You can print the first 5 passwords for the 'testuser' above using the following
 (where KEY is replaced with the key generated above).
 
 ```
-$ oathtool/oathtool --totp -w 5 KEY
+$ oathtool --totp -w 5 KEY
 ```
 
 The user can then use OTP tools in his mobile like FreeOTP (in android app-store),
