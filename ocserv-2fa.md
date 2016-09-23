@@ -39,7 +39,7 @@ You can print the first 5 passwords for the 'testuser' using the following comma
 KEY is replaced with the key generated above).
 
 ```
-$ oathtool/oathtool -w 5 KEY
+$ oathtool -w 5 KEY
 ```
 
 The user can then use OTP tools in his mobile like FreeOTP (in android app-store),
