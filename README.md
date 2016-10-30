@@ -20,3 +20,4 @@ and submit it [at github](https://github.com/openconnect/recipes).
   * [Pseudo-Bridge setup with Proxy ARP](ocserv-pseudo-bridge.md)
   * [How to share the same port for VPN and HTTP](ocserv-multihost.md)
   * [Site to site links with ocserv](ocserv-site-to-site.md)
+  * [VoIP network](ocserv-ip-phone.md)
