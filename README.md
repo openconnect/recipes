@@ -16,6 +16,7 @@ and submit it [at github](https://github.com/openconnect/recipes).
   * [How to setup ocserv for PAM authentication](ocserv-authentication-pam.md)
   * [Using Kerberos authentication with ocserv](ocserv-kerberos.md)
   * [Integrating ocserv with FreeIPA](ocserv-freeipa.md)
+  * [How to restrict authentication by country](ocserv-country-blocking.md)
 3. Networking
   * [Pseudo-Bridge setup with Proxy ARP](ocserv-pseudo-bridge.md)
   * [How to share the same port for VPN and HTTP](ocserv-multihost.md)
