@@ -24,6 +24,9 @@ if [ "x${IP_REAL}" = "x" ]; then
 fi
 
 GEOIP_STRING=$(/bin/curl -s https://freegeoip.net/csv/$IP_REAL)
+# Alternatively, in Fedora 23 or higher, the following would also provide the 
+# country code variable using the local geoip database:
+# COUNTRY_CODE=$(ipcalc -g ${IP_REAL} | grep CODE | cut -d'=' -f2)
 
 COUNTRY_CODE=$(echo $GEOIP_STRING | cut -d ',' -f2)
 
