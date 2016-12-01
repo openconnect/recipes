@@ -7,9 +7,13 @@ It is open for contribution; if you think you have a good overview
 of a common (or not so-common) scenario, open a pull request
 and submit it [at github](https://github.com/openconnect/recipes).
 
+0. Installation
+  * [Generic](ocserv-installation-generic.md)
+  * [Centos/RHEL/Fedora](ocserv-installation-CentOS-RHEL-Fedora.md)
+  * [Debian/Ubuntu](ocserv-installation-Debian-Ubuntu.md)
 1. Generic recipes
-  * [Installation](ocserv-installation-generic.md)
   * [Basic ocserv configuration](ocserv-configuration-basic.md)
+  * [Firewall setup](ocserv-firewall-iptables-ipv4.md)
 2. Authentication
   * [Two factor authentication with ocserv](ocserv-2fa.md)
   * [How to setup ocserv for RADIUS authentication](ocserv-authentication-radius-radcli.md)
