@@ -1,13 +1,19 @@
 # Two factor authentication with ocserv
 
-Author: Nikos Mavrogiannopoulos
+Author: Nikos Mavrogiannopoulos, John Thiltges
 
 ## Introduction
 ocserv allows for multiple authentication factors per session. This
-document discusses the options available for one-time passwords and
+document discusses the options available for one-time passwords, Duo, and
 smart cards.
 
-## OATH: One-time passwords with PAM
+## Table of Contents
+ 1. [OATH: One-time passwords with PAM](#OATH1)
+ 2. [OATH: One-time passwords with ocserv's password file](#OATH2)
+ 3. [PKI: Smart cards](#PKI)
+ 4. [Authentication using Duo](#Duo)
+
+## OATH: One-time passwords with PAM <a name="OATH1"></a>
 
 It is possible to require each user to enter their password and an additional
 one time password. That can be done using PAM as the authentication backend and
@@ -69,7 +75,7 @@ being replaced).
 otpauth://hotp/testuser@example.com?secret=BASE32KEY&issuer=COMPANY&counter=1
 ```
 
-## OATH: One-time passwords with ocserv's password file
+## OATH: One-time passwords with ocserv's password file <a name="OATH2"></a>
 
 Since version 0.10.9 it is possible to use ocserv's password file for 2FA. It
 requires ocserv to be compiled with liboath.
@@ -110,7 +116,7 @@ or a yubikey as a second factor.
 The instructions to setup Yubikey or FreeOTP are identical to the PAM case. Note that
 Yubikeys cannot use time based OTP.
 
-## PKI: Smart cards
+## PKI: Smart cards <a name="PKI"></a>
 
 It is possible to use openconnect and ocserv using smart cards as a second factor.
 This text will guide the steps required to generate the Public Key Infrastructure
@@ -195,4 +201,55 @@ you may specify the minimum URL required, e.g., a URL which identifies the
 card and the object name only, and openconnect will expand as necessary.
 
 See also [Smart Card / PKCS#11 support](http://www.infradead.org/openconnect/pkcs11.html)
+
+
+## Authentication using Duo <a name="Duo"></a>
+
+Two-factor authentication service from [Duo Security](https://duo.com/) can be
+combined with ocserv. This recipe was tested on CentOS 7.
+
+ 1. Install Duo Unix.
+    Duo provides [installation packages](https://duo.com/docs/duounix#linux-distribution-packages);
+    you will need to configure your site keys in ```/etc/duo/pam_duo.conf```.
+
+ 2.  Configure PAM to enable Duo for password authentication.
+     You need to modify ```/etc/pam.d/password-auth```:
+     * Using local accounts (users in /etc/passwd)
+        * Change auth pam_unix.so from "sufficient" to "requisite"
+        * Add "auth sufficient pam_duo.so"
+
+        ```
+        --- password-auth.orig
+        +++ password-auth
+        @@ -1,6 +1,7 @@
+         #%PAM-1.0
+         auth        required      pam_env.so
+        -auth        sufficient    pam_unix.so nullok try_first_pass
+        +auth        requisite     pam_unix.so nullok try_first_pass
+        +auth        sufficient    pam_duo.so
+         auth        requisite     pam_succeed_if.so uid >= 1000 quiet_success
+         auth        required      pam_deny.so
+        ```
+
+    * Using LDAP accounts and SSSD
+        * Change auth pam_sss.so from "sufficient" to "requisite"
+        * Add "auth sufficient pam_duo.so"
+
+        ```
+        --- password-auth-ac.orig
+        +++ password-auth-ac
+        @@ -3,7 +3,8 @@
+         auth        [default=1 success=ok] pam_localuser.so
+         auth        [success=done ignore=ignore default=die] pam_unix.so nullok try_first_pass
+         auth        requisite     pam_succeed_if.so uid >= 1000 quiet_success
+        -auth        sufficient    pam_sss.so forward_pass
+        +auth        requisite     pam_sss.so forward_pass
+        +auth        sufficient    pam_duo.so
+         auth        required      pam_deny.so
+
+         account     required      pam_unix.so broken_shadow
+        ```
+
+  3.  You're done!
+      ocserv passes the Duo prompts to VPN clients.
 
