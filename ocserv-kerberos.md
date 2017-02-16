@@ -16,19 +16,21 @@ be done with the following two lines in ocserv.conf.
 
 ```
 auth = pam
-enable-auth = gssapi[tgt-freshness-time=360]
+enable-auth = gssapi[keytab=/etc/ocserv/key.tab,tgt-freshness-time=360]
 ```
 
-That will allow authentication with Kerberos tickets as well as with the password
+That will allow authentication with Kerberos tickets, as well as with their password
 (e.g., for clients that cannot obtain a ticket – like clients in mobile phones). 
-The option ‘tgt-freshness-time’, is available with openconnect VPN server 0.10.5,
-and specifies the valid for VPN authentication lifetime, in seconds, of a Kerberos
-(TGT) ticket. A user will have to reauthenticate if this time is exceeded. In effect
-that prevents the usage of the VPN for the whole lifetime of a Kerberos ticket.
+In addition the 'keytab' option sets the ocserv's shared key with KDC
+explicitly. The option ‘tgt-freshness-time’, when used, specifies the valid for VPN authentication 
+lifetime, in seconds, of a Kerberos (TGT) ticket. A user will have to reauthenticate if this
+time is exceeded. In effect that prevents the usage of the VPN for the whole lifetime of
+a Kerberos ticket.
 
 The following line will enable the MS-KKDCP proxy on ocserv. You’ll need to replace
 the KERBEROS.REALM with your realm and the KDC IP address. That proxy will allow
-the client to obtain Kerberos tickets through ocserv.
+the client to obtain Kerberos tickets through ocserv. The latter is an optional step if
+your clients can obtain the tickets with other means.
 
 ```
 kkdcp = /KdcProxy KERBEROS.REALM tcp@KDC-IP-ADDRESS:88
@@ -43,8 +45,8 @@ PAM configuration is shown in the [Fedora Deployment guide](https://docs.fedorap
 ## Setting the client up
 
 At the client side you must make sure you use openconnect 7.05 or later.
-You need also to setup Kerberos to use ocserv as KDC. For that you’ll need
-to modify /etc/krb5.conf to contain the following:
+In order to use the KKDCP proxy as setup above, you need to setup Kerberos to use
+ocserv as KDC. For that you’ll need to modify /etc/krb5.conf to contain the following:
 
 ```
 [realms]
