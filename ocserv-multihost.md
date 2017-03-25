@@ -58,12 +58,54 @@ you perform client certificate verification in haproxy and expect
 ocserv to trust the user name provided by it.
 
 
-## Method 2: SSL termination on ocserv
+## Method 2: SSL termination on ocserv with haproxy
 
 An alternative method to collocate ocserv and an HTTPS server on port 443,
-is by using SNI and forwarding traffic accordingly. In this example we use
-[sniproxy](https://github.com/dlundquist/sniproxy), but the same can be
-achieved with haproxy as well.
+is by using the server name indication (SNI) present on the first SSL/TLS
+ClientHello message, and forwarding traffic according to the name present.
+
+In the example below we assume that the web server and ocserv have to be setup
+to use an alternative port, e.g., ocserv uses 4443, and the web server uses
+4444. We also assume that the web server responds to www.example.com, while
+the vpn server, to vpn.example.com. An example configuration of haproxy that
+will redirect the traffic to the appropriate server is shown below.
+
+```
+frontend www-https
+   bind 0.0.0.0:443
+   mode tcp
+   tcp-request inspect-delay 5s
+   tcp-request content accept if { req_ssl_hello_type 1 }
+   default_backend bk_ssl_default
+
+backend bk_ssl_default
+   mode tcp
+   acl vpn-app req_ssl_sni -i vpn.example.com
+   acl web-app req_ssl_sni -i www.example.com
+
+   use-server server-vpn if vpn-app
+   use-server server-web if web-app
+   use-server server-web if !vpn-app !web-app
+
+   option ssl-hello-chk
+   server server-vpn 127.0.0.1:4443 send-proxy-v2-ssl
+   server server-web 127.0.0.1:4444 check
+```
+
+As with the example above, we enabled the use of proxy protocol
+in order for ocserv to obtain information on the session. That
+requires ocserv's configuration to contain:
+
+```
+listen-proxy-proto = true
+```
+
+
+## Method 2: SSL termination on ocserv with sniproxy
+
+An alternative method to collocate ocserv and an HTTPS server on port 443,
+is by using SNI and forwarding traffic accordingly. This example is
+identical to the previous, but we use [sniproxy](https://github.com/dlundquist/sniproxy).
 
 Sniproxy allows sharing the HTTPS port as long as the clients advertise
 the host name they connect to using server name indication (SNI). This
