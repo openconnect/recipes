@@ -28,7 +28,6 @@ frontend www-https
    bind 0.0.0.0:443
    mode tcp
    tcp-request inspect-delay 5s
-   tcp-request content accept if { req_ssl_hello_type 1 }
    default_backend bk_ssl_default
 
 backend bk_ssl_default
@@ -38,16 +37,17 @@ backend bk_ssl_default
 
    use-server server-vpn if vpn-app
    use-server server-web if web-app
-   use-server server-web if !vpn-app !web-app
+   use-server server-vpn if !vpn-app !web-app
 
    option ssl-hello-chk
-   server server-vpn 127.0.0.1:4443 send-proxy-v2-ssl
+   server server-vpn 127.0.0.1:4443 send-proxy-v2
    server server-web 127.0.0.1:4444 check
 ```
 
-As with the example above, we enabled the use of proxy protocol
-in order for ocserv to obtain information on the session. That
-requires ocserv's configuration to contain:
+In order for ocserv to obtain information on the incoming session,
+we have enabled the proxy protocol in haproxy's configuration (with
+the send-proxy-v2 option). That requires ocserv's configuration to contain
+the following:
 
 ```
 listen-proxy-proto = true
@@ -93,9 +93,14 @@ mostly for low-traffic VPN servers and web sites.
 To collocate ocserv and an HTTPS server on port 443, 
 [haproxy](http://www.haproxy.org/) (or similar proxy applications) could
 be used. haproxy allows forwarding the HTTPS port data to arbitrary servers,
-based on various criteria. This method, however, has the limitation that
-ocserv does not "see" the SSL session, and cannot enforce client certificate
-authentication, nor derive any keys needed for the DTLS session.
+based on various criteria. This method, however, has few limitations based
+on the fact that ocserv does not "see" the SSL session.
+ * It cannot enforce client certificate authentication.
+ * It cannot derive any keys needed for the DTLS session.
+ * It cannot enforce the framing of the SSL/TLS packets, and that
+   breaks some assumptions of openconnect client.
+
+Nevertheless, it may be useful on certain scenarios.
 
 The configuration required for haproxy is something along the lines:
 ```
