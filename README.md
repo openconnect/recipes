@@ -26,3 +26,6 @@ and submit it [at github](https://github.com/openconnect/recipes).
   * [How to share the same port for VPN and HTTP](ocserv-multihost.md)
   * [Site to site links with ocserv](ocserv-site-to-site.md)
   * [VoIP network](ocserv-ip-phone.md)
+4. Configuration Management
+  * [Link to Ansible role](https://github.com/aprt5pr/lansible-role-ocserv)
+  * [Link to Chef cookbook](https://supermarket.chef.io/cookbooks/ocserv)
