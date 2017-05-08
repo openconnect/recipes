@@ -44,8 +44,7 @@ support for OpenConnect.
 
 For the first setup, the hardware that is needed is:
 
- * [An OpenWRT router](https://wiki.openwrt.org/toh/start), with [Turris Omnia](https://wiki.openwrt.org/toh/turris/turris)
-   being recommended due to its capabilities.
+ * [An OpenWRT router](https://wiki.openwrt.org/toh/start)
  * Any SIP phone
 
 While the latter setup requires:
