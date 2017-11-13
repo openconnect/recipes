@@ -9,11 +9,12 @@ on a system. This section will describe two methods on how to collocate
 ocserv with a web server.
 
 We recommend the first method, as it has no inherent limitations, as
-opposed to the second.
+opposed to the second which should be considered experimental only.
 
-## Method 1: SSL termination on ocserv with haproxy
+## Method 1: SSL termination on ocserv
+### haproxy
 
-An alternative method to collocate ocserv and an HTTPS server on port 443,
+An method to collocate ocserv and an HTTPS server on port 443,
 is by using the server name indication (SNI) present on the first SSL/TLS
 ClientHello message, and forwarding traffic according to the name present.
 
@@ -54,7 +55,7 @@ listen-proxy-proto = true
 ```
 
 
-## Method 1: SSL termination on ocserv with sniproxy
+### sniproxy
 
 An alternative method to collocate ocserv and an HTTPS server on port 443,
 is by using SNI and forwarding traffic accordingly. This example is
@@ -85,8 +86,6 @@ table TableName {
 }
 ```
 
-Both of the approaches incur a performance penalty and should be considered
-mostly for low-traffic VPN servers and web sites.
 
 ## Method 2: SSL termination on external program
 
