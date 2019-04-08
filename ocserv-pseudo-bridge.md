@@ -29,7 +29,7 @@ preferred editor and add the following lines:
 
 ```
 # Enables Proxy ARP on all interfaces
-net/ipv4/conf/all/proxy_arp   = 1
+net.ipv4.conf.all.proxy_arp   = 1
 ```
 
 Save the file and exit. items in sysctl.conf are applied on system
@@ -45,7 +45,7 @@ with your preferred editor and add the following lines:
 ```
 # Enables Proxy ARP on a specific interface (Replace "interfacename"
 # with your interface, eg.eth0, eth0.100, wlan0, etc.)
-net/ipv4/conf/interfacename/proxy_arp  = 1
+net.ipv4.conf.interfacename.proxy_arp  = 1
 ```
 
 Save the file and exit. items in sysctl.conf are applied on system
