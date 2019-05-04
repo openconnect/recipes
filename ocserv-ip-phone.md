@@ -121,7 +121,7 @@ have not test this setup.
 
 Then select ```Enable Connection``` and if that works check ```Connect on bootup```.
 
-#### Setting up SIP on rhw phone
+#### Setting up SIP on the phone
 
 Once the VPN connection is established on the phone you should setup the SIP
 accounts. These are available through the web (administrator) interface. As
