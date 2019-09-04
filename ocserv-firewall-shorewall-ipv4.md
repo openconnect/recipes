@@ -70,8 +70,17 @@ apt-get install shorewall
 ```  
 
 **CentOS/RHEL/Fedora**  
+
+On older versions:  
+
 ```
-yum install iptables-services  
+yum install shorewall  
+```  
+
+or, on latest versions  
+
+```
+dnf install shorewall
 ```  
 
 **openSUSE**  
