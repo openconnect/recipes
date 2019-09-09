@@ -2,7 +2,7 @@
 
 Author: Mauro Gaspari  
 
-###Scope
+### Scope
 This recipe provides a deployment example of letsencrypt to provide ssl certificates for ocserv.   shorewall (ipv4) is used as firewall.  
 This recipe does not claim to be a step-by-step guide or a letsencrypt tutorial, as there are plenty of those available online. Also, this recipe does not claim to be the best or most secure letsencrypt or shorewall setup, but barely a starting point example for a GNU/Linux based router/firewall with Ocserv.  
 
@@ -42,7 +42,7 @@ net.ipv4.ip_forward = 1
 - An example to open port TCP 80 is provided, so that port TCP 80 is in stealth mode most of the time, and traffic allowed only during certificate renewal.  
 
 
-###Configure shorewall firewall for ocserv  
+### Configure shorewall firewall for ocserv  
 - Add ocs interface by adding the below line to /etc/shorewall/interfaces  
 ```
 ocs     OCS_IF      physical=vpns+
@@ -82,7 +82,7 @@ shorewall save
 
 
 
-###Install let's encrypt to manage certificates  
+### Install let's encrypt to manage certificates  
 
 **Debian/Ubuntu**  
 
@@ -106,14 +106,14 @@ zypper in shorewall certbot
 ```  
 
 
-###Create certificates for ocserv  
+### Create certificates for ocserv  
 ```
 certbot certonly --standalone --preferred-challenges http --agree-tos --email your-email-address -d vpn.yourdomain.domain
 ```  
 **NOTE1:** closely monitor the output to find any issue with certificate creation.  
 **NOTE2:** make sure you have a valid dns A record to point "vpn.yourdomain.domain" to the public IP address configured of your wan.  
 
-###Setup auto renewal of certificates  
+### Setup auto renewal of certificates  
 Edit: /etc/crontab  
 Add this line to your crontab:  
 ```
@@ -123,12 +123,12 @@ Add this line to your crontab:
 
 
 
-###Configure openconnect server  
+### Configure openconnect server  
 Configure ocserv according to instructions on official site: <https://ocserv.gitlab.io/www/recipes-ocserv-configuration-basic.html>
 - Skip the certificate creation step, we are getting certificates from letsencrypt.  
 - Instead of generating certificates, link the location where your certificates are stored by letsencrypt: /etc/letsencrypt/live/vpn.yourdomain.domain  
 
-###restart openconnect server  
+### Restart openconnect server  
 ```
 service ocserv restart
 ```  
