@@ -3,7 +3,7 @@
 Author: Mauro Gaspari  
 
 ### Scope
-This recipe provides a deployment example of letsencrypt to provide ssl certificates for ocserv.   shorewall (ipv4) is used as firewall.  
+This recipe provides a deployment example of letsencrypt to provide ssl certificates for ocserv. Shorewall (ipv4) is used as firewall.  
 This recipe does not claim to be a step-by-step guide or a letsencrypt tutorial, as there are plenty of those available online. Also, this recipe does not claim to be the best or most secure letsencrypt or shorewall setup, but barely a starting point example for a GNU/Linux based router/firewall with Ocserv.  
 
 ### Platforms used for testing  
@@ -51,7 +51,7 @@ ocs     OCS_IF      physical=vpns+
 ```
 ocs     ipv4
 ```  
-- open ports by adding the below lines in shorewall rules file: /etc/shorewall/rules .  
+- Open ports by adding the below lines in shorewall rules file: /etc/shorewall/rules .  
 - **NOTE1** port 80 is needed for letsencrypt. A temporary website will be enabled by certbot only during certificate creation or renewal port 80 therefore shows as closed from external port scans if you want to keep port 80 as stealth, see NOTE2.  
 ```
 ACCEPT          net     $FW     tcp     80
@@ -66,14 +66,14 @@ ACCEPT          net     $FW     tcp     443
 ACCEPT          net     $FW     udp     443
 ```  
 
-- configure policies to allow VPN traffic between openconnect clients and devices in your local network by adding the below lines in shorewall policy file: etc/shorewall/policy  
+- Configure policies to allow VPN traffic between openconnect clients and devices in your local network by adding the below lines in shorewall policy file: etc/shorewall/policy  
 ```
 loc     ocs     ACCEPT
 ocs     loc     ACCEPT
 ```  
 **NOTE3** if you do not want all traffic to be allowed between ocserv and local network, create specific rules in the /etc/shorewall/rules file instead.  
 
-- check, restart, and save shorewall rules:  
+- Check, restart, and save shorewall rules:  
 ```
 shorewall check
 shorewall restart
