@@ -70,17 +70,8 @@ apt-get install shorewall
 ```  
 
 **CentOS/RHEL/Fedora**  
-
-On older versions:  
-
 ```
-yum install shorewall  
-```  
-
-or, on latest versions  
-
-```
-dnf install shorewall
+yum install iptables-services  
 ```  
 
 **openSUSE**  
@@ -89,7 +80,7 @@ dnf install shorewall
 zypper in shorewall shorewall-docs
 ```  
 
-### shorewall configuration example  
+### Shorewall configuration example  
 Refer to the below examples for a functioning shorewall with ocserv.  
 **Note for shorewall configuration:** Shorewall configurations are stored in a few files, usually in the folder /etc/shorewall . If the folder is empty, refer to your distribution shorewall man page, copy sample files from documentation folder to /etc/shorewall.  
 You can also refer to official shorewall documentation: <http://www.shorewall.net/>  
@@ -257,7 +248,7 @@ shorewall save
 systemctl enable shorewall.service
 ```  
 
-###Final Test  
+### Final Test  
 In order to make sure everything is properly configured, a system reboot is recommended. Check that all services are started after boot, and that shorewall and ocserv are working as intended.
 
 ** Note for Webmin Users **  
@@ -267,8 +258,34 @@ Webmin users can enjoy web based shorewall management.
 - Since Ocserv is the only exposed service on this server, a third party ISD/IPS system is not required. Ocserv includes client ban functionalities that can be easily customized. Please see ocserv.conf for more information, comments above each option are very clear.
 - It is good practice, especially if admin wants to expose ssh, webmin, or other services to the WAN, to install and configure Fail2Ban package. Fail2Ban will automatically block source IPs when monitored services receive failed logins or suspicious actions.
 
-
-
 ### Conclusion and final notes
 This concludes **Ocserv Firewall - shorewall IPv4** recipe. At this point shorewall will allow Openconnect server to receive VPN connections from the WAN interface.   
 If you want to learn more, you can find Ocserv recipes here: <http://www.infradead.org/ocserv/recipes.html>
+
+### Appendix A. Shorewall configuration for letsencrypt  
+
+- Traffic to firewall port TCP 80 is allowed from wan, to allow letsencrypt updates. Note that firewall opens the port but web server is closed most of the time. web server will be brougt up only during certificate renewal.  
+- An example to open port TCP 80 is provided, so that port TCP 80 is in stealth mode most of the time, and traffic allowed only during certificate renewal.  
+
+
+#### Shorewall rules for letsencrypt - Standard rule  
+- open ports by adding the below lines in shorewall rules file: /etc/shorewall/rules .  
+- port 80 is needed for letsencrypt. A temporary website will be enabled by certbot only during certificate creation or renewal. Therefore port 80 shows as closed from external port scans. If you want to keep port 80 in stealth mode instead of closed, see paragraph below.  
+```
+ACCEPT          net     $FW     tcp     80
+```  
+
+#### Shorewall rules for letsencrypt - Stealth port rule  
+If you prefer port 80 to be in stealth mode instead of showing up as closed from external port scans, use the rules in the example below. Note that with the rule below, http port accepts traffic only between 00:10 and 00:20. Port 80 will be in stealth mode outside of the 10 minutes specified in the rule. And even during the 10 minutes, the port will still be closed, unless letsencrypt opens it for a few seconds to renew certificates.  
+Further tweaking such as day of the week, month, and more can be done in shorewall. Refer to official documentation <http://www.shorewall.net/manpages/shorewall-rules.html>.  **NOTE** Make sure that accept time matches crontab entry for letsencrypt certificates renewal.  
+```
+ACCEPT          net     $FW     tcp     80       -   -   -   -   -   -   localtz&timestart=00:10&timestop=00:20
+```  
+
+#### Restart shorewall to apply changes
+- Once firewall rules are changed, do not forget to check, restart, and save shorewall rules:  
+```
+shorewall check
+shorewall restart
+shorewall save
+```  
