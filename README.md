@@ -13,8 +13,10 @@ and submit it [at github](https://github.com/openconnect/recipes).
   * [Debian/Ubuntu](ocserv-installation-Debian-Ubuntu.md)
 1. Generic recipes
   * [Basic ocserv configuration](ocserv-configuration-basic.md)
+  * [Certificates - Letsencrypt](ocserv-certificates-letsencrypt.md)
   * [Firewall setup](ocserv-firewall-iptables-ipv4.md)
-2. Authentication
+  * [Firewall setup with shorewall](ocserv-firewall-shorewall-ipv4.md)
+ 2. Authentication
   * [Two factor authentication with ocserv](ocserv-2fa.md)
   * [How to setup ocserv for RADIUS authentication](ocserv-authentication-radius-radcli.md)
   * [How to setup ocserv for PAM authentication](ocserv-authentication-pam.md)
